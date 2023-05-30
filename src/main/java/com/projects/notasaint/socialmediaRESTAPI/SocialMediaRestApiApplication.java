@@ -1,5 +1,6 @@
 package com.projects.notasaint.socialmediaRESTAPI;
 
+import com.projects.notasaint.socialmediaRESTAPI.mappers.PostMapper;
 import com.projects.notasaint.socialmediaRESTAPI.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.boot.SpringApplication;
@@ -16,6 +17,11 @@ public class SocialMediaRestApiApplication {
 	@Bean
 	public UserMapper userMapper() {
 		return Mappers.getMapper(UserMapper.class);
+	}
+
+	@Bean
+	public PostMapper postMapper() {
+		return Mappers.getMapper(PostMapper.class);
 	}
 
 }

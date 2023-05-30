@@ -63,4 +63,7 @@ public class User {
             joinColumns = @JoinColumn(name = "user", referencedColumnName = "id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "friends", referencedColumnName = "id", nullable = false))
     private List<User> friends;
+
+    @OneToMany(mappedBy = "userLogin")
+    private List<Comment> userComments;
 }

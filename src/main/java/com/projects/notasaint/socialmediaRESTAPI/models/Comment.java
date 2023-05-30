@@ -7,28 +7,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@Table
 @Entity
+@Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "user_login", referencedColumnName = "login")
+    private User userLogin;
+
     @NotEmpty
     private String text;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime createdAt;
+    @Temporal(value = TemporalType.DATE)
+    private LocalDateTime localDateTime;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
-
-    @OneToMany(mappedBy = "post")
-    private List<Comment> commentList;
+    @JoinColumn(name = "post_id", referencedColumnName = "id")
+    private Post post;
 }

@@ -34,6 +34,5 @@ public class UserDTO {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @OneToMany(mappedBy = "user")
     private Set<Post> postList;
 }

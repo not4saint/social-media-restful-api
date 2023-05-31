@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,23 +13,33 @@ import java.util.List;
 @Table
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
+
+    private String heading;
 
     @NotEmpty
     private String text;
 
+    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     private List<Comment> commentList;
+
+    public Post(String heading, String text, LocalDateTime createdAt, User user) {
+        this.heading = heading;
+        this.text = text;
+        this.createdAt = createdAt;
+        this.user = user;
+    }
 }

@@ -52,18 +52,18 @@ public class User {
 
     private boolean nonLocked;
 
-    @OneToOne(mappedBy = "userId")
+    @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL)
     private Role role;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Post> postList;
 
     @ManyToMany
     @JoinTable(name = "User_Friendship",
             joinColumns = @JoinColumn(name = "user", referencedColumnName = "id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "friends", referencedColumnName = "id", nullable = false))
+            inverseJoinColumns = @JoinColumn(name = "friend", referencedColumnName = "id", nullable = false))
     private List<User> friends;
 
-    @OneToMany(mappedBy = "userLogin")
+    @OneToMany(mappedBy = "userLogin", cascade = CascadeType.ALL)
     private List<Comment> userComments;
 }

@@ -1,7 +1,6 @@
 package com.projects.notasaint.socialmediaRESTAPI.dto;
 
 import com.projects.notasaint.socialmediaRESTAPI.models.Comment;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
@@ -13,9 +12,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @Setter
-public class PostDTO {
+public class ResponsePostDTO {
     @NotEmpty
     private String login;
+
+    private String heading;
 
     @NotEmpty
     private String text;
@@ -23,6 +24,5 @@ public class PostDTO {
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
-    @OneToMany(mappedBy = "post")
     private List<Comment> commentList;
 }

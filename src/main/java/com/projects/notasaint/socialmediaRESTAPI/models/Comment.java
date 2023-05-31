@@ -25,8 +25,9 @@ public class Comment {
     @NotEmpty
     private String text;
 
+    @Column(name = "created_at")
     @Temporal(value = TemporalType.DATE)
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
 
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "id")

@@ -26,27 +26,25 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
-    private final AuthenticationProvider authenticationProvider;
-    private final LogoutHandler logoutHandler;
     private final PasswordEncoder passwordEncoder;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
+        return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/social-media/add-post").authenticated();
                     auth.requestMatchers("/social-media/update-post/*").authenticated();
                     auth.requestMatchers("/social-media/delete/*").authenticated();
                     auth.anyRequest().permitAll();
                 })
-                .authenticationProvider(authenticationProvider)
-                .logout()
-                .logoutUrl("/social-media/exit")
-                .addLogoutHandler(logoutHandler)
-                .logoutSuccessHandler(((request, response, authentication) -> SecurityContextHolder.clearContext()));
-        return http.build();
+                .exceptionHandling(exceptions -> exceptions.accessDeniedPage("/social-media/login"))
+                .logout(logout -> {
+                    logout.logoutUrl("/social-media/exit");
+                    logout.logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
+                })
+                .build();
     }
 
     @Bean

@@ -33,9 +33,6 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    private List<Comment> commentList;
-
     public Post(String heading, String text, LocalDateTime createdAt, User user) {
         this.heading = heading;
         this.text = text;

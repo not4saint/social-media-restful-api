@@ -1,6 +1,5 @@
 package com.projects.notasaint.socialmediaRESTAPI.dto;
 
-import com.projects.notasaint.socialmediaRESTAPI.models.Comment;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotEmpty;
@@ -23,6 +22,4 @@ public class ResponsePostDTO {
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
-
-    private List<Comment> commentList;
 }

@@ -42,18 +42,22 @@ public class PostServiceImpl implements PostService {
     public void addPostToUser(RequestPostDTO requestPostDTO) {
         User user = AuthUtil.getAuthenticate();
         Post post = new Post(requestPostDTO.getHeading(), requestPostDTO.getText(), LocalDateTime.now(), user);
+
         postRepository.save(post);
+        user.getPostList().add(post);
     }
 
     @Override
     @Transactional
     public void updatePostToUserById(RequestPostDTO requestPostDTO, long postId) {
-
         Post post = findPostById(postId);
+
         post.setHeading(requestPostDTO.getHeading());
         post.setText(requestPostDTO.getText());
         post.setCreatedAt(LocalDateTime.now());
+
         postRepository.save(post);
+        post.getUser().getPostList().add(post);
     }
 
     @Override

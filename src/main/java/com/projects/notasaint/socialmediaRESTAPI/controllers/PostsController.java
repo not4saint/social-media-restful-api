@@ -25,14 +25,14 @@ public class PostsController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PatchMapping("/{postId}/update-post")
+    @PatchMapping("/update-post/{postId}")
     public ResponseEntity<HttpStatus> updatePost(@RequestBody RequestPostDTO requestPostDTO,
                                                  @PathVariable long postId) {
         postService.updatePostToUserById(requestPostDTO, postId);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{postId}/delete")
+    @DeleteMapping("/delete/{postId}")
     public ResponseEntity<HttpStatus> deletePost(@PathVariable long postId) {
         postService.deletePostToUserById(postId);
         return ResponseEntity.ok(HttpStatus.OK);

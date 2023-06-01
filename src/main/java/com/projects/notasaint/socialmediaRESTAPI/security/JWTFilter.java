@@ -1,6 +1,6 @@
 package com.projects.notasaint.socialmediaRESTAPI.security;
 
-import com.projects.notasaint.socialmediaRESTAPI.services.SecurityUserService;
+import com.projects.notasaint.socialmediaRESTAPI.services.impls.SecurityUserService;
 import com.projects.notasaint.socialmediaRESTAPI.util.JWTUtil;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

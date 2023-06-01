@@ -1,8 +1,9 @@
-package com.projects.notasaint.socialmediaRESTAPI.services;
+package com.projects.notasaint.socialmediaRESTAPI.services.impls;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.FriendDTO;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.FriendRepository;
 import com.projects.notasaint.socialmediaRESTAPI.security.SecurityUser;
+import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

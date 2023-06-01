@@ -7,7 +7,6 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @AllArgsConstructor
 @Setter
@@ -17,7 +16,6 @@ public class ResponsePostDTO {
 
     private String heading;
 
-    @NotEmpty
     private String text;
 
     @Temporal(TemporalType.TIMESTAMP)

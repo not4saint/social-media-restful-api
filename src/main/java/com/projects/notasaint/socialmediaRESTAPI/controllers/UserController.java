@@ -1,7 +1,7 @@
 package com.projects.notasaint.socialmediaRESTAPI.controllers;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.UserDTO;
-import com.projects.notasaint.socialmediaRESTAPI.services.UserService;
+import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

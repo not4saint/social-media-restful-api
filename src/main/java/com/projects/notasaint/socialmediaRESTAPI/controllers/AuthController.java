@@ -3,7 +3,7 @@ package com.projects.notasaint.socialmediaRESTAPI.controllers;
 import com.projects.notasaint.socialmediaRESTAPI.dto.LoginDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.RegisterDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.ResponseToken;
-import com.projects.notasaint.socialmediaRESTAPI.services.AuthService;
+import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.AuthService;
 import com.projects.notasaint.socialmediaRESTAPI.util.UserValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

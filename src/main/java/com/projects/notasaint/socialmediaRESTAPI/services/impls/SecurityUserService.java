@@ -1,4 +1,4 @@
-package com.projects.notasaint.socialmediaRESTAPI.services;
+package com.projects.notasaint.socialmediaRESTAPI.services.impls;
 
 import com.projects.notasaint.socialmediaRESTAPI.exceptions.UserNotFoundException;
 import com.projects.notasaint.socialmediaRESTAPI.models.User;
@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor

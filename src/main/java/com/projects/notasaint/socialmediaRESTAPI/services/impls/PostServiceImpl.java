@@ -1,4 +1,4 @@
-package com.projects.notasaint.socialmediaRESTAPI.services;
+package com.projects.notasaint.socialmediaRESTAPI.services.impls;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.RequestPostDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.ResponsePostDTO;
@@ -7,6 +7,7 @@ import com.projects.notasaint.socialmediaRESTAPI.mappers.PostMapper;
 import com.projects.notasaint.socialmediaRESTAPI.models.Post;
 import com.projects.notasaint.socialmediaRESTAPI.models.User;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.PostRepository;
+import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.PostService;
 import com.projects.notasaint.socialmediaRESTAPI.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

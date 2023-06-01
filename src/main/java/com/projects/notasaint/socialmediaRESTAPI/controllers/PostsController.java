@@ -2,7 +2,7 @@ package com.projects.notasaint.socialmediaRESTAPI.controllers;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.RequestPostDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.ResponsePostDTO;
-import com.projects.notasaint.socialmediaRESTAPI.services.PostService;
+import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

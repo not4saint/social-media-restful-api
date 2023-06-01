@@ -1,7 +1,7 @@
 package com.projects.notasaint.socialmediaRESTAPI.controllers;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.FriendDTO;
-import com.projects.notasaint.socialmediaRESTAPI.services.FriendService;
+import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.FriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

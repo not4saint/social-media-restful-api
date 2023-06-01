@@ -1,4 +1,4 @@
-package com.projects.notasaint.socialmediaRESTAPI.services;
+package com.projects.notasaint.socialmediaRESTAPI.services.interfaces;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.LoginDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.RegisterDTO;

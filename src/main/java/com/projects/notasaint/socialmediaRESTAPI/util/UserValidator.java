@@ -3,6 +3,7 @@ package com.projects.notasaint.socialmediaRESTAPI.util;
 import com.projects.notasaint.socialmediaRESTAPI.dto.RegisterDTO;
 import com.projects.notasaint.socialmediaRESTAPI.models.User;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.UserRepository;
+import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
@@ -20,7 +21,7 @@ public class UserValidator implements Validator {
     }
 
     @Override
-    public void validate(Object target, Errors errors) {
+    public void validate(@NotNull Object target, @NotNull Errors errors) {
         RegisterDTO user = (RegisterDTO) target;
 
         Optional<User> optionalUser = userRepository.findUserByEmail(user.getEmail());

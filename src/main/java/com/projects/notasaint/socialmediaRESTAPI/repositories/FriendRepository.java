@@ -1,6 +1,5 @@
 package com.projects.notasaint.socialmediaRESTAPI.repositories;
 
-import com.projects.notasaint.socialmediaRESTAPI.dto.FriendDTO;
 import com.projects.notasaint.socialmediaRESTAPI.models.Friend;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

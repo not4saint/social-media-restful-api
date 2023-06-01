@@ -28,6 +28,7 @@ public class AuthController {
     public ResponseEntity<HttpStatus> register(@RequestBody @Valid RegisterDTO registerDTO, BindingResult bindingResult) {
         userValidator.validate(registerDTO, bindingResult);
         authService.register(registerDTO);
+
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

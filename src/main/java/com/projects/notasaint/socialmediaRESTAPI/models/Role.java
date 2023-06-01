@@ -15,9 +15,9 @@ public class Role {
     @Id
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    @Cascade(org.hibernate.annotations.CascadeType.REMOVE)
+    @Cascade(org.hibernate.annotations.CascadeType.ALL)
     private User userId;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private RoleValue role;
 }

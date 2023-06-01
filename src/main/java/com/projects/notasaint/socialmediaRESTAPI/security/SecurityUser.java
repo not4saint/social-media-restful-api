@@ -4,10 +4,12 @@ import com.projects.notasaint.socialmediaRESTAPI.models.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.io.Serial;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class SecurityUser implements org.springframework.security.core.userdetai
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return 
+        return Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getRole().name()));
     }
 
     @Override

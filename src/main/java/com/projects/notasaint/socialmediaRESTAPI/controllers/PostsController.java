@@ -3,6 +3,7 @@ package com.projects.notasaint.socialmediaRESTAPI.controllers;
 import com.projects.notasaint.socialmediaRESTAPI.dto.RequestPostDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.ResponsePostDTO;
 import com.projects.notasaint.socialmediaRESTAPI.services.PostService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,13 +21,13 @@ public class PostsController {
     }
 
     @PostMapping("/add-post")
-    public ResponseEntity<HttpStatus> createPost(@RequestBody RequestPostDTO requestPostDTO) {
+    public ResponseEntity<HttpStatus> createPost(@RequestBody @Valid RequestPostDTO requestPostDTO) {
         postService.addPostToUser(requestPostDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("/update-post/{postId}")
-    public ResponseEntity<HttpStatus> updatePost(@RequestBody RequestPostDTO requestPostDTO,
+    public ResponseEntity<HttpStatus> updatePost(@RequestBody @Valid RequestPostDTO requestPostDTO,
                                                  @PathVariable long postId) {
         postService.updatePostToUserById(requestPostDTO, postId);
         return ResponseEntity.ok(HttpStatus.OK);

@@ -30,6 +30,7 @@ public class User {
     @NotEmpty(message = "Login should not be empty")
     private String login;
 
+    @Column(name = "phone_number")
     @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$",
             message = "Incorrect format of the entered number")
     private String phoneNumber;
@@ -46,9 +47,11 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
+    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
 
+    @Column(name = "non_locked")
     private boolean nonLocked;
 
     @OneToOne(mappedBy = "userId", cascade = CascadeType.ALL)
@@ -57,9 +60,9 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<Post> postList;
 
-    @ManyToMany
-    @JoinTable(name = "User_Friendship",
-            joinColumns = @JoinColumn(name = "user", referencedColumnName = "id", nullable = false),
-            inverseJoinColumns = @JoinColumn(name = "friend", referencedColumnName = "id", nullable = false))
+    @OneToMany(mappedBy = "mainUser")
+    private List<User> friends;
+
+    @OneToMany(mappedBy = "mainUser")
     private List<User> friends;
 }

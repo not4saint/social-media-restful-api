@@ -2,20 +2,27 @@ package com.projects.notasaint.socialmediaRESTAPI.services.impls;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.RequestPostDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.ResponsePostDTO;
+import com.projects.notasaint.socialmediaRESTAPI.exceptions.FileUploadedException;
 import com.projects.notasaint.socialmediaRESTAPI.exceptions.PostNotFoundException;
 import com.projects.notasaint.socialmediaRESTAPI.mappers.PostMapper;
 import com.projects.notasaint.socialmediaRESTAPI.models.Post;
 import com.projects.notasaint.socialmediaRESTAPI.models.User;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.PostRepository;
 import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.PostService;
-import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -25,6 +32,8 @@ import java.util.Optional;
 public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
+    @Value("${file.path_to_all_files}")
+    private String filePath;
     @Override
     public ResponsePostDTO findPostByUserLoginAndPostId(String login, long id) {
         Optional<Post> optionalPost = postRepository.findPostById(id);
@@ -42,8 +51,16 @@ public class PostServiceImpl implements PostService {
     @Override
     @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void addPostToUser(RequestPostDTO requestPostDTO, User user, String email) {
-        Post post = new Post(requestPostDTO.getHeading(), requestPostDTO.getText(), LocalDateTime.now(), user);
+    public void addPostToUser(RequestPostDTO requestPostDTO, User user, String email, MultipartFile file) {
+        String fileName = uploadFileAndGetFilename(file);
+
+        Post post = Post.builder()
+                .text(requestPostDTO.getText())
+                .heading(requestPostDTO.getHeading())
+                .createdAt(LocalDateTime.now())
+                .user(user)
+                .imagePath(fileName)
+                .build();
 
         postRepository.save(post);
         user.getPostList().add(post);
@@ -52,12 +69,15 @@ public class PostServiceImpl implements PostService {
     @Override
     @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void updatePostToUserById(RequestPostDTO requestPostDTO, long postId, String email) {
+    public void updatePostToUserById(RequestPostDTO requestPostDTO, long postId, String email, MultipartFile file) {
         Post post = findPostById(postId);
-
+        if (!file.isEmpty()) {
+            String fileName = uploadFileAndGetFilename(file);
+            post.setImagePath(fileName);
+        }
+        
         post.setHeading(requestPostDTO.getHeading());
         post.setText(requestPostDTO.getText());
-        post.setCreatedAt(LocalDateTime.now());
 
         postRepository.save(post);
         post.getUser().getPostList().add(post);
@@ -78,5 +98,19 @@ public class PostServiceImpl implements PostService {
             throw new PostNotFoundException("Post not found");
         }
         return optionalPost.get();
+    }
+
+    // Создаем уникальное название для файла и загружаем файл
+    private String uploadFileAndGetFilename(MultipartFile file) {
+        String curDate = LocalDateTime.now().toString();
+        String fileName = filePath + "/" + "post_" + curDate + "_" +
+                Objects.requireNonNull(file.getOriginalFilename()).toLowerCase()
+                        .replaceAll(" ", "-");
+        try {
+            file.transferTo(new File(fileName));
+        } catch (Exception e) {
+            throw new FileUploadedException("The file was not uploaded");
+        }
+        return fileName;
     }
 }

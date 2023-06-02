@@ -42,7 +42,6 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void register(RegisterDTO registerDTO) {
-        // TODO: 01.06.2023 check user exists
         User user = userMapper.convertRegisterDTOToUser(registerDTO);
         user.setCreatedAt(LocalDateTime.now());
         user.setNonLocked(true);

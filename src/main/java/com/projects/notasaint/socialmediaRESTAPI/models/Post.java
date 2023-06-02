@@ -2,6 +2,9 @@ package com.projects.notasaint.socialmediaRESTAPI.models;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
@@ -12,13 +15,17 @@ import java.time.LocalDateTime;
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(max = 50)
     private String heading;
 
+    @Size(max = 1000)
     private String text;
 
     @Column(name = "created_at")
@@ -30,10 +37,5 @@ public class Post {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    public Post(String heading, String text, LocalDateTime createdAt, User user) {
-        this.heading = heading;
-        this.text = text;
-        this.createdAt = createdAt;
-        this.user = user;
-    }
+    private String imagePath;
 }

@@ -20,4 +20,6 @@ public class ResponsePostDTO {
 
     @Temporal(TemporalType.TIMESTAMP)
     private LocalDateTime createdAt;
+
+    private String imagePath;
 }

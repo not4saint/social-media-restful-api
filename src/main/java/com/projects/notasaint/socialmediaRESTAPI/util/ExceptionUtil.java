@@ -10,7 +10,7 @@ public class ExceptionUtil {
         StringBuilder str = new StringBuilder();
         List<FieldError> errors = bindingResult.getFieldErrors();
         for (FieldError fieldError : errors) {
-            str.append(fieldError.getField()).append(" - ").append(fieldError.getDefaultMessage()).append(";");
+            str.append(fieldError.getField()).append(" - ").append(fieldError.getDefaultMessage()).append(";\n");
         }
         return str.toString();
     }

@@ -2,14 +2,18 @@ package com.projects.notasaint.socialmediaRESTAPI.controllers;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.RequestPostDTO;
 import com.projects.notasaint.socialmediaRESTAPI.dto.ResponsePostDTO;
+import com.projects.notasaint.socialmediaRESTAPI.exceptions.IncorrectSizePostFieldsException;
 import com.projects.notasaint.socialmediaRESTAPI.models.User;
 import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.PostService;
 import com.projects.notasaint.socialmediaRESTAPI.util.AuthUtil;
+import com.projects.notasaint.socialmediaRESTAPI.util.ExceptionUtil;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/social-media")
@@ -22,18 +26,28 @@ public class PostsController {
         return postService.findPostByUserLoginAndPostId(login, postId);
     }
 
-    @PostMapping("/add-post")
-    public ResponseEntity<HttpStatus> createPost(@RequestBody RequestPostDTO requestPostDTO) {
+    @PostMapping(name = "/add-post", produces = "application/json")
+    public ResponseEntity<HttpStatus> createPost(@RequestBody @Valid RequestPostDTO requestPostDTO,
+                                                 @RequestPart MultipartFile file,
+                                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new IncorrectSizePostFieldsException(ExceptionUtil.configureMessage(bindingResult));
+
         final User user = AuthUtil.getAuthenticate();
-        postService.addPostToUser(requestPostDTO, user, user.getEmail());
+        postService.addPostToUser(requestPostDTO, user, user.getEmail(), file);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("/update-post/{postId}")
-    public ResponseEntity<HttpStatus> updatePost(@RequestBody RequestPostDTO requestPostDTO,
-                                                 @PathVariable long postId) {
+    public ResponseEntity<HttpStatus> updatePost(@RequestBody @Valid RequestPostDTO requestPostDTO,
+                                                 @PathVariable long postId,
+                                                 @RequestPart MultipartFile file,
+                                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors())
+            throw new IncorrectSizePostFieldsException(ExceptionUtil.configureMessage(bindingResult));
+
         final User user = AuthUtil.getAuthenticate();
-        postService.updatePostToUserById(requestPostDTO, postId, user.getEmail());
+        postService.updatePostToUserById(requestPostDTO, postId, user.getEmail(), file);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

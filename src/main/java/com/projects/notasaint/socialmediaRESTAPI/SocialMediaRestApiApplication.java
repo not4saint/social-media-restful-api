@@ -5,9 +5,11 @@ import com.projects.notasaint.socialmediaRESTAPI.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
+@EnableConfigurationProperties(AppConfig.class)
 public class SocialMediaRestApiApplication {
 
 	public static void main(String[] args) {

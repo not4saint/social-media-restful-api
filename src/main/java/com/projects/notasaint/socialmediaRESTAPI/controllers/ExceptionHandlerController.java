@@ -14,16 +14,34 @@ import java.time.LocalDateTime;
 public class ExceptionHandlerController {
 
     @ExceptionHandler({UserNotFoundException.class, PostNotFoundException.class, UserAlreadyRegisteredWithSuchEmailException.class})
-    public ResponseEntity<ExceptionResponse> handleUserOrPostNotFoundException(RuntimeException e, HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleUserOrPostNotFoundException(RuntimeException e,
+                                                                               HttpServletRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(request.getRequestURI(), e.getMessage(),
                 LocalDateTime.now());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler({BadCredentialsException.class, IncorrectFormatEnteredCredentials.class})
-    public ResponseEntity<ExceptionResponse> handleBadCredentialsException(RuntimeException e, HttpServletRequest request) {
+    public ResponseEntity<ExceptionResponse> handleBadCredentialsException(RuntimeException e,
+                                                                           HttpServletRequest request) {
         ExceptionResponse exceptionResponse = new ExceptionResponse(request.getRequestURI(), e.getMessage(),
                 LocalDateTime.now());
         return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({IncorrectSizePostFieldsException.class})
+    public ResponseEntity<ExceptionResponse> handleIncorrectSizePostFieldsException(RuntimeException e,
+                                                                                    HttpServletRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(request.getRequestURI(), e.getMessage(),
+                LocalDateTime.now());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({FileUploadedException.class})
+    public ResponseEntity<ExceptionResponse> handleFileUploadedException(RuntimeException e,
+                                                                                    HttpServletRequest request) {
+        ExceptionResponse exceptionResponse = new ExceptionResponse(request.getRequestURI(), e.getMessage(),
+                LocalDateTime.now());
+        return new ResponseEntity<>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

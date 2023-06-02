@@ -29,7 +29,6 @@ public class AuthController {
 
         return authService.login(loginDTO);
     }
-
     @PostMapping("/register")
     public ResponseEntity<HttpStatus> register(@RequestBody @Valid RegisterDTO registerDTO, BindingResult bindingResult) {
         userValidator.validate(registerDTO, bindingResult);

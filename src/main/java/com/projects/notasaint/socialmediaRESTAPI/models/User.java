@@ -23,22 +23,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @NotEmpty
     private String firstname;
 
-    @NotEmpty
     private String surname;
 
-    @NotEmpty
+    @NotEmpty(message = "Login should not be empty")
     private String login;
 
-    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$")
+    @Pattern(regexp = "^((8|\\+7)[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$",
+            message = "Incorrect format of the entered number")
     private String phoneNumber;
 
-    @Email
+    @Email(message = "Incorrect format of the entered email")
     private String email;
 
-    @NotEmpty
+    @NotEmpty(message = "Password should not be empty")
     private char[] password;
 
     @Temporal(TemporalType.DATE)

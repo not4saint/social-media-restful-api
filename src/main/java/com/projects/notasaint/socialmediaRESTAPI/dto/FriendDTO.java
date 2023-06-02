@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 public class FriendDTO {
-    @NotEmpty
+    @NotEmpty(message = "Firstname should not be empty")
     private String firstname;
 
-    @NotEmpty
+    @NotEmpty(message = "Surname should not be empty")
     private String surname;
 
-    @NotEmpty
+    @NotEmpty(message = "Login should not be empty")
     private String login;
 }

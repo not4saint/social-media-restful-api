@@ -6,9 +6,9 @@ import lombok.Value;
 
 @Value
 public class LoginDTO {
-    @Email
+    @Email(message = "Incorrect format of the entered email")
     String email;
 
-    @NotEmpty
+    @NotEmpty(message = "Firstname should not be empty")
     char[] password;
 }

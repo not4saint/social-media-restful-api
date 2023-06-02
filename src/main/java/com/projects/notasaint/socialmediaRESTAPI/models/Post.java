@@ -19,7 +19,6 @@ public class Post {
 
     private String heading;
 
-    @NotEmpty
     private String text;
 
     @Column(name = "created_at")

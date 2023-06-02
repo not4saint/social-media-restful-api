@@ -13,10 +13,8 @@ import java.util.Set;
 
 @Data
 public class UserDTO {
-    @NotEmpty
     private String firstname;
 
-    @NotEmpty
     private String surname;
 
     @NotEmpty

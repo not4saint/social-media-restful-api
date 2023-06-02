@@ -21,13 +21,13 @@ public class PostsController {
     }
 
     @PostMapping("/add-post")
-    public ResponseEntity<HttpStatus> createPost(@RequestBody @Valid RequestPostDTO requestPostDTO) {
+    public ResponseEntity<HttpStatus> createPost(@RequestBody RequestPostDTO requestPostDTO) {
         postService.addPostToUser(requestPostDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PatchMapping("/update-post/{postId}")
-    public ResponseEntity<HttpStatus> updatePost(@RequestBody @Valid RequestPostDTO requestPostDTO,
+    public ResponseEntity<HttpStatus> updatePost(@RequestBody RequestPostDTO requestPostDTO,
                                                  @PathVariable long postId) {
         postService.updatePostToUserById(requestPostDTO, postId);
         return ResponseEntity.ok(HttpStatus.OK);

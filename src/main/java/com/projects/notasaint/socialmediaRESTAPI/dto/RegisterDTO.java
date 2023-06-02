@@ -6,15 +6,12 @@ import lombok.Value;
 
 @Value
 public class RegisterDTO {
-    @NotEmpty
-    String firstname;
+    @NotEmpty(message = "Login should not be empty")
+    String login;
 
-    @NotEmpty
-    String surname;
-
-    @Email
+    @Email(message = "Incorrect format of the entered email")
     String email;
 
-    @NotEmpty
+    @NotEmpty(message = "Password should not be empty")
     char[] password;
 }

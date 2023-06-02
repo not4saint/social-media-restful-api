@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -25,12 +26,12 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
+    private final JWTFilter jwtFilter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/social-media/add-post").authenticated();
                     auth.requestMatchers("/social-media/update-post/*").authenticated();
@@ -42,6 +43,8 @@ public class SecurityConfiguration {
                     logout.logoutUrl("/social-media/exit");
                     logout.logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
                 })
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

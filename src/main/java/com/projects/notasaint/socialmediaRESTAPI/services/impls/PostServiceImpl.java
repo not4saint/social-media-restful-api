@@ -8,9 +8,10 @@ import com.projects.notasaint.socialmediaRESTAPI.models.Post;
 import com.projects.notasaint.socialmediaRESTAPI.models.User;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.PostRepository;
 import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.PostService;
-import com.projects.notasaint.socialmediaRESTAPI.util.AuthUtil;
+import jakarta.validation.constraints.Email;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,9 +40,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void addPostToUser(RequestPostDTO requestPostDTO) {
-        User user = AuthUtil.getAuthenticate();
+    public void addPostToUser(RequestPostDTO requestPostDTO, User user, String email) {
         Post post = new Post(requestPostDTO.getHeading(), requestPostDTO.getText(), LocalDateTime.now(), user);
 
         postRepository.save(post);
@@ -49,8 +50,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void updatePostToUserById(RequestPostDTO requestPostDTO, long postId) {
+    public void updatePostToUserById(RequestPostDTO requestPostDTO, long postId, String email) {
         Post post = findPostById(postId);
 
         post.setHeading(requestPostDTO.getHeading());
@@ -62,8 +64,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void deletePostToUserById(long postId) {
+    public void deletePostToUserById(long postId, String email) {
         postRepository.delete(findPostById(postId));
     }
 

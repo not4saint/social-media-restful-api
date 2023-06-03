@@ -2,32 +2,32 @@ package com.projects.notasaint.socialmediaRESTAPI.models;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
 
-import java.util.List;
-
-@Table
 @Entity
+@Table
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Dialog {
+@Builder
+public class Relationship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "owner_id", referencedColumnName = "id")
+    @JoinColumn(name = "main_user_id", referencedColumnName = "id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private User owner;
+    private User firstUser;
 
     @ManyToOne
-    @JoinColumn(name = "companion_id", referencedColumnName = "id")
+    @JoinColumn(name = "second_user_id", referencedColumnName = "id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private User companion;
+    private User secondUser;
 
-    @OneToMany(mappedBy = "dialog")
-    private List<Message> messages;
+    @Column(name = "relationship_type")
+    private RelationshipType relationshipType;
 }

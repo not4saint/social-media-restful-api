@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/social-media")
 @RequiredArgsConstructor
-public class UserController {
+public class UsersController {
     private final UserService userService;
 
     @GetMapping("/{login}")

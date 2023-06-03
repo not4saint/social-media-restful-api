@@ -63,7 +63,7 @@ public class PostServiceImpl implements PostService {
                 .build();
 
         postRepository.save(post);
-        user.getPostList().add(post);
+        user.getPosts().add(post);
     }
 
     @Override
@@ -80,7 +80,7 @@ public class PostServiceImpl implements PostService {
         post.setText(requestPostDTO.getText());
 
         postRepository.save(post);
-        post.getUser().getPostList().add(post);
+        post.getUser().getPosts().add(post);
     }
 
     @Override

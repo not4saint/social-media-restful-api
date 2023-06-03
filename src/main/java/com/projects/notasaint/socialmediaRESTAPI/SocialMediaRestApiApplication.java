@@ -1,15 +1,14 @@
 package com.projects.notasaint.socialmediaRESTAPI;
 
+import com.projects.notasaint.socialmediaRESTAPI.mappers.RelationshipMapper;
 import com.projects.notasaint.socialmediaRESTAPI.mappers.PostMapper;
 import com.projects.notasaint.socialmediaRESTAPI.mappers.UserMapper;
 import org.mapstruct.factory.Mappers;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@EnableConfigurationProperties(AppConfig.class)
 public class SocialMediaRestApiApplication {
 
 	public static void main(String[] args) {
@@ -26,4 +25,8 @@ public class SocialMediaRestApiApplication {
 		return Mappers.getMapper(PostMapper.class);
 	}
 
+	@Bean
+	public RelationshipMapper friendsMapper() {
+		return Mappers.getMapper(RelationshipMapper.class);
+	}
 }

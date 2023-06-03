@@ -58,11 +58,17 @@ public class User {
     private Role role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private Set<Post> postList;
+    private Set<Post> posts;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Dialog> ownerDialogs;
+
+//    @OneToMany(mappedBy = "companion")
+//    private Set<Dialog> companionDialogs;
 
     @OneToMany(mappedBy = "mainUser")
-    private List<User> friends;
+    private Set<Relationship> users;
 
-    @OneToMany(mappedBy = "mainUser")
-    private List<User> friends;
+//    @OneToMany(mappedBy = "secondUser")
+//    private Set<Relationship> friends;
 }

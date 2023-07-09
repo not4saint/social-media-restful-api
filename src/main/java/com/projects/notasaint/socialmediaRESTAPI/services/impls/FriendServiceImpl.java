@@ -5,8 +5,8 @@ import com.projects.notasaint.socialmediaRESTAPI.exceptions.UserOperationsFriend
 import com.projects.notasaint.socialmediaRESTAPI.exceptions.UserNotFoundException;
 import com.projects.notasaint.socialmediaRESTAPI.mappers.RelationshipMapper;
 import com.projects.notasaint.socialmediaRESTAPI.models.Relationship;
-import com.projects.notasaint.socialmediaRESTAPI.models.RelationshipType;
-import com.projects.notasaint.socialmediaRESTAPI.models.User;
+import com.projects.notasaint.socialmediaRESTAPI.models.Users;
+import com.projects.notasaint.socialmediaRESTAPI.models.enums.RelationshipType;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.RelationshipRepository;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.UserRepository;
 import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.FriendService;
@@ -28,11 +28,11 @@ public class FriendServiceImpl implements FriendService {
     private final RelationshipMapper relationshipMapper;
     @Override
     @PreAuthorize("#email == authentication.principal.username")
-    public List<FriendDTO> findAllFriendsAtUserInCurrentAuth(User user, String email) {
+    public List<FriendDTO> findAllFriendsAtUserInCurrentAuth(Users users, String email) {
         List<FriendDTO> friends =
-                relationshipRepository.findAllByMainUserOrSecondUserAndRelationshipType(user, RelationshipType.FRIENDS)
+                relationshipRepository.findAllByMainUserOrSecondUserAndRelationshipType(users, RelationshipType.FRIENDS)
                 .stream()
-                .map(fr -> relationshipMapper.convertUserToFriendDTO(fr.getFirstUser() == user ? fr.getFirstUser() : fr.getSecondUser()))
+                .map(fr -> relationshipMapper.convertUserToFriendDTO(fr.getFirstUser() == users ? fr.getFirstUser() : fr.getSecondUser()))
                 .toList();
         if (friends.isEmpty())
             return Collections.emptyList();
@@ -43,18 +43,18 @@ public class FriendServiceImpl implements FriendService {
     @Override
     @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void addFriendInCurrentAuth(User user, FriendDTO friendDTO, String email) {
-        if (user.getLogin().equals(friendDTO.getLogin()))
+    public void addFriendInCurrentAuth(Users users, FriendDTO friendDTO, String email) {
+        if (users.getLogin().equals(friendDTO.getLogin()))
             throw new UserOperationsFriendException("The user cannot add himself");
 
-        User friend = userRepository.findUserByLogin(friendDTO.getLogin())
+        Users friend = userRepository.findUserByLogin(friendDTO.getLogin())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        Optional<Relationship> optionalRelationship = relationshipRepository.findRelationshipByFirstAndSecondUser(user, friend);
+        Optional<Relationship> optionalRelationship = relationshipRepository.findRelationshipByFirstAndSecondUser(users, friend);
 
         if (optionalRelationship.isEmpty()) {
             relationshipRepository.save(Relationship.builder()
-                    .firstUser(user)
+                    .firstUser(users)
                     .secondUser(friend)
                     .relationshipType(RelationshipType.FIRST_FOLLOWER)
                     .build());
@@ -66,14 +66,14 @@ public class FriendServiceImpl implements FriendService {
     @Override
     @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void deleteFriendInCurrentAuth(User user, FriendDTO friendDTO, String email) {
-        if (user.getLogin().equals(friendDTO.getLogin()))
+    public void deleteFriendInCurrentAuth(Users users, FriendDTO friendDTO, String email) {
+        if (users.getLogin().equals(friendDTO.getLogin()))
             throw new UserOperationsFriendException("The user cannot delete himself");
 
-        User friend = userRepository.findUserByLogin(friendDTO.getLogin())
+        Users friend = userRepository.findUserByLogin(friendDTO.getLogin())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
-        Optional<Relationship> optionalRelationship = relationshipRepository.findRelationshipByFirstAndSecondUser(user, friend);
+        Optional<Relationship> optionalRelationship = relationshipRepository.findRelationshipByFirstAndSecondUser(users, friend);
 
         if (optionalRelationship.isEmpty()) {
             throw new UserOperationsFriendException("Users are not friends");

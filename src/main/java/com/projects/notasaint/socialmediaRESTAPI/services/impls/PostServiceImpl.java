@@ -6,21 +6,18 @@ import com.projects.notasaint.socialmediaRESTAPI.exceptions.FileUploadedExceptio
 import com.projects.notasaint.socialmediaRESTAPI.exceptions.PostNotFoundException;
 import com.projects.notasaint.socialmediaRESTAPI.mappers.PostMapper;
 import com.projects.notasaint.socialmediaRESTAPI.models.Post;
-import com.projects.notasaint.socialmediaRESTAPI.models.User;
+import com.projects.notasaint.socialmediaRESTAPI.models.Users;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.PostRepository;
 import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
@@ -49,21 +46,21 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @PreAuthorize("#email == authentication.principal.username")
+//    @PreAuthorize("#email == authentication.principal.username")
     @Transactional
-    public void addPostToUser(RequestPostDTO requestPostDTO, User user, String email, MultipartFile file) {
-        String fileName = uploadFileAndGetFilename(file);
+    public void addPostToUser(RequestPostDTO requestPostDTO, Users users, String email, MultipartFile file) {
+        log.info("Yser");
 
         Post post = Post.builder()
                 .text(requestPostDTO.getText())
                 .heading(requestPostDTO.getHeading())
                 .createdAt(LocalDateTime.now())
-                .user(user)
-                .imagePath(fileName)
+                .user(users)
+                .imagePath(!file.isEmpty() ? uploadFileAndGetFilename(file) : null)
                 .build();
 
         postRepository.save(post);
-        user.getPosts().add(post);
+        users.getPosts().add(post);
     }
 
     @Override

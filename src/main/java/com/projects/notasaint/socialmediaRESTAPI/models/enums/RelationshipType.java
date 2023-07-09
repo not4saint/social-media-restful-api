@@ -1,4 +1,4 @@
-package com.projects.notasaint.socialmediaRESTAPI.models;
+package com.projects.notasaint.socialmediaRESTAPI.models.enums;
 
 public enum RelationshipType {
     FIRST_FOLLOWER,

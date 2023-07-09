@@ -1,7 +1,7 @@
 package com.projects.notasaint.socialmediaRESTAPI.util;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.RegisterDTO;
-import com.projects.notasaint.socialmediaRESTAPI.models.User;
+import com.projects.notasaint.socialmediaRESTAPI.models.Users;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.UserRepository;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class UserValidator implements Validator {
     public void validate(@NotNull Object target, @NotNull Errors errors) {
         RegisterDTO user = (RegisterDTO) target;
 
-        Optional<User> optionalUser = userRepository.findUserByEmail(user.getEmail());
+        Optional<Users> optionalUser = userRepository.findUserByEmail(user.getEmail());
         if (optionalUser.isPresent())
             errors.rejectValue("email", "", "User already registered");
     }

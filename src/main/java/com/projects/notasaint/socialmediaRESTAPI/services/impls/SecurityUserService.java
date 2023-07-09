@@ -1,7 +1,7 @@
 package com.projects.notasaint.socialmediaRESTAPI.services.impls;
 
 import com.projects.notasaint.socialmediaRESTAPI.exceptions.UserNotFoundException;
-import com.projects.notasaint.socialmediaRESTAPI.models.User;
+import com.projects.notasaint.socialmediaRESTAPI.models.Users;
 import com.projects.notasaint.socialmediaRESTAPI.repositories.UserRepository;
 import com.projects.notasaint.socialmediaRESTAPI.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class SecurityUserService implements UserDetailsService {
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findUserByEmail(email)
+        Users users = userRepository.findUserByEmail(email)
                                     .orElseThrow(() -> new UserNotFoundException("User not found with email " + email));
-        return new SecurityUser(user);
+        return new SecurityUser(users);
     }
 }

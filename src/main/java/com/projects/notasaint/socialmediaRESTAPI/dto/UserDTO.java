@@ -1,6 +1,6 @@
 package com.projects.notasaint.socialmediaRESTAPI.dto;
 
-import com.projects.notasaint.socialmediaRESTAPI.models.Gender;
+import com.projects.notasaint.socialmediaRESTAPI.models.enums.Gender;
 import com.projects.notasaint.socialmediaRESTAPI.models.Post;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

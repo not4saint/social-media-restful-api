@@ -26,7 +26,7 @@ public class SocialMediaRestApiApplication {
 	}
 
 	@Bean
-	public RelationshipMapper friendsMapper() {
+	public RelationshipMapper relationshipMapper() {
 		return Mappers.getMapper(RelationshipMapper.class);
 	}
 }

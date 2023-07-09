@@ -1,7 +1,6 @@
 package com.projects.notasaint.socialmediaRESTAPI.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +34,8 @@ public class Post {
     @ManyToOne
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
-    private User user;
+    private Users user;
 
+    @Column(name = "path_to_image")
     private String imagePath;
 }

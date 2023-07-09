@@ -21,12 +21,12 @@ public class Dialog {
     @ManyToOne
     @JoinColumn(name = "owner_id", referencedColumnName = "id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private User owner;
+    private Users owner;
 
     @ManyToOne
     @JoinColumn(name = "companion_id", referencedColumnName = "id")
     @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private User companion;
+    private Users companion;
 
     @OneToMany(mappedBy = "dialog")
     private List<Message> messages;

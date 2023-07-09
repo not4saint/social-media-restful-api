@@ -2,9 +2,11 @@ package com.projects.notasaint.socialmediaRESTAPI.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Getter;
 import lombok.Value;
 
 @Value
+@Getter
 public class RegisterDTO {
     @NotEmpty(message = "Login should not be empty")
     String login;
@@ -13,5 +15,5 @@ public class RegisterDTO {
     String email;
 
     @NotEmpty(message = "Password should not be empty")
-    char[] password;
+    String password;
 }

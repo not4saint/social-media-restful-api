@@ -1,7 +1,7 @@
 package com.projects.notasaint.socialmediaRESTAPI.controllers;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.FriendDTO;
-import com.projects.notasaint.socialmediaRESTAPI.models.User;
+import com.projects.notasaint.socialmediaRESTAPI.models.Users;
 import com.projects.notasaint.socialmediaRESTAPI.services.interfaces.FriendService;
 import com.projects.notasaint.socialmediaRESTAPI.util.AuthUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,21 +20,21 @@ public class RelationshipController {
 
     @GetMapping("/friends")
     public List<FriendDTO> getAllFriendsAtUser() {
-        final User user = authUtil.getAuthenticate();
-        return friendService.findAllFriendsAtUserInCurrentAuth(user, user.getEmail());
+        final Users users = authUtil.getAuthenticate();
+        return friendService.findAllFriendsAtUserInCurrentAuth(users, users.getEmail());
     }
 
     @PostMapping("/add-friend")
     public ResponseEntity<HttpStatus> sendRequestToFriends(@RequestBody FriendDTO friendDTO) {
-        final User user = authUtil.getAuthenticate();
-        friendService.addFriendInCurrentAuth(user, friendDTO, user.getEmail());
+        final Users users = authUtil.getAuthenticate();
+        friendService.addFriendInCurrentAuth(users, friendDTO, users.getEmail());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @DeleteMapping("/delete-friend")
     public ResponseEntity<HttpStatus> deleteFriend(@RequestBody FriendDTO friendDTO) {
-        final User user = authUtil.getAuthenticate();
-        friendService.deleteFriendInCurrentAuth(user, friendDTO, user.getEmail());
+        final Users users = authUtil.getAuthenticate();
+        friendService.deleteFriendInCurrentAuth(users, friendDTO, users.getEmail());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }

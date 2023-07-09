@@ -1,5 +1,6 @@
 package com.projects.notasaint.socialmediaRESTAPI.models;
 
+import com.projects.notasaint.socialmediaRESTAPI.models.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -10,15 +11,14 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
-@Table
+@Table(name = "users")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -39,8 +39,9 @@ public class User {
     private String email;
 
     @NotEmpty(message = "Password should not be empty")
-    private char[] password;
+    private String password;
 
+    @Column(name = "date_of_birthday")
     @Temporal(TemporalType.DATE)
     private LocalDate dateOfBirthday;
 
@@ -66,7 +67,7 @@ public class User {
 //    @OneToMany(mappedBy = "companion")
 //    private Set<Dialog> companionDialogs;
 
-    @OneToMany(mappedBy = "mainUser")
+    @OneToMany(mappedBy = "firstUser")
     private Set<Relationship> users;
 
 //    @OneToMany(mappedBy = "secondUser")

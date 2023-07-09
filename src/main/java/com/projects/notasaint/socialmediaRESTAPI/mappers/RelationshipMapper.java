@@ -1,10 +1,10 @@
 package com.projects.notasaint.socialmediaRESTAPI.mappers;
 
 import com.projects.notasaint.socialmediaRESTAPI.dto.FriendDTO;
-import com.projects.notasaint.socialmediaRESTAPI.models.User;
+import com.projects.notasaint.socialmediaRESTAPI.models.Users;
 import org.mapstruct.Mapper;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface RelationshipMapper {
-    FriendDTO convertUserToFriendDTO(User user);
+    FriendDTO convertUserToFriendDTO(Users users);
 }

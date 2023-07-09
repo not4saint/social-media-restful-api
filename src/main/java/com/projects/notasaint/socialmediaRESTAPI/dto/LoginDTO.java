@@ -10,5 +10,5 @@ public class LoginDTO {
     String email;
 
     @NotEmpty(message = "Firstname should not be empty")
-    char[] password;
+    String password;
 }

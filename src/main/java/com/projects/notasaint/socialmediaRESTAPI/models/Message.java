@@ -25,8 +25,10 @@ public class Message {
     @NotEmpty
     private String text;
 
+    @Column(name = "is_reading")
     private boolean isReading;
 
+    @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
 }
